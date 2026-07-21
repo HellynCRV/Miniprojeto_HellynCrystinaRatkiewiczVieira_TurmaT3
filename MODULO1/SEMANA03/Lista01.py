@@ -287,13 +287,15 @@
 #print(f"O valor de D é: {D}")
 
 #40. Calcule a quantidade de dinheiro gasta por um fumante. Dados de entrada: o número de anos que ele fuma, o nº de cigarros fumados por dia e o preço de uma carteira (1 carteira tem 20 cigarros).
-Anos_fumando = int(input("Digite o número de anos que você fuma: "))
-Cigarros_por_dia = int(input("Digite o número de cigarros fumados por dia: "))
-Preco_carteira = float(input("Digite o preço de uma carteira de cigarros: "))
+#Anos_fumando = int(input("Digite o número de anos que você fuma: "))
+#Cigarros_por_dia = int(input("Digite o número de cigarros fumados por dia: "))
+#Preco_carteira = float(input("Digite o preço de uma carteira de cigarros: "))
 
 # Cálculo da quantidade de dinheiro gasta por um fumante
-total_cigarros = Anos_fumando * 365 * Cigarros_por_dia
-total_carteiras = total_cigarros / 20
-dinheiro_gasto = total_carteiras * Preco_carteira
-print(f"A quantidade de dinheiro gasta por você é: R$ {dinheiro_gasto:.2f}")
+#total_cigarros = Anos_fumando * 365 * Cigarros_por_dia
+#total_carteiras = total_cigarros / 20
+#dinheiro_gasto = total_carteiras * Preco_carteira
+#print(f"A quantidade de dinheiro gasta por você é: R$ {dinheiro_gasto:.2f}")
+
+
 
