@@ -21,16 +21,18 @@ df.info()
 # SPRINT 2 & 3: TRANSFORMAÇÃO DE TIPOS E TRATAMENTO DE NULOS
 # =====================================================================
 
-# 1. Drop de Colunas:Removendo as colunas 'Unnamed' que vieram vazias
+# Tratamento de nulos das dimensões físicas
+# Justificativa técnica: As colunas extras 'Unnamed' apresentam 100% de valores ausentes (nulos).
+# Optou-se pela exclusão de colunas (Trimming), pois não possuem relevância para as regras de negócio.
 colunas_vazias = ['Unnamed: 10', 'Unnamed: 11', 'Unnamed: 12', 'Unnamed: 13']
-df = df.drop(columns=colunas_vazias)
+df = df.drop(columns=colunas_vazias, errors='ignore')  # errors='ignore' evita erros caso as colunas não existam
 
-# 2. Sprint 2 - Padronização de Texto: Removendo espaços e caixa alta
+# SPRINT 2: Padronização de Texto
 df['PR_CAT'] = df['PR_CAT'].str.strip().str.upper()
 df['PR_NOME'] = df['PR_NOME'].str.strip().str.upper()
 
-# 3. Sprint 3 - Tratamento de Nulos com Condicionais (if/else)
-# Loop para preencher categorias vazias com "Sem Categoria" conforme o critério
+# Lógica condicional (if/else) para preencher categorias vazias
+# Garante que campos em branco ou strings ruidosas sejam mapeados uniformemente
 categorias_ajustadas = []
 for item in df['PR_CAT']:
     if item == "" or item == "NAN" or item == "NONE":
@@ -39,11 +41,12 @@ for item in df['PR_CAT']:
         categorias_ajustadas.append(item)
 df['PR_CAT'] = categorias_ajustadas
 
-# 4. Sprint 3 - Padronização de Datas: Convertendo a string para data
-# Usando errors='coerce' conforme ensinado para tratar anomalias temporais
+# Conversão de string de data utilizando o módulo datetime
+# O parâmetro errors='coerce' é empregado para mitigar eventuais inconsistências de datas
 df['DATA'] = pd.to_datetime(df['DATA'], format='%d/%m/%Y', errors='coerce')
 
-# 5. Tratamento de Duplicatas: Removendo linhas redundantes na base
+# Validação da regra do identificador de número de compra (CO_ID)
+# Remoção de duplicatas idênticas para preservar a unicidade de cada transação estruturada
 df = df.drop_duplicates()
 
 print("--- DIAGNÓSTICO DA BASE LIMPA ---")
