@@ -1,4 +1,3 @@
-
 # ==========================================
 # SPRINT 1: IMPORTAÇÃO E EXPLORAÇÃO INICIAL
 # ==========================================
@@ -11,11 +10,24 @@ df = pd.read_csv("Base Varejo.csv", sep=";")
 
 # Visualizando as primeiras linhas para entender a estrutura dos dados
 print("Primeiras linhas do dataset:")
-print(df.head())
+display(df.head())
 
 # Verificando informações gerais: quantidade de registros, colunas e tipos de dados
 print("\nInformações gerais sobre a base de dados:")
 df.info()
+
+# Verificando a quantidade de registros e colunas
+print(f"Quantidade de registros: {df.shape[0]}")
+
+# Verificando a quantidade de colunas
+print(f"Quantidade de colunas: {df.shape[1]}")
+
+# Verificando os nomes das colunas
+print("\nColunas:")
+
+# Imprimindo a lista de nomes de colunas
+print(df.columns.tolist())
+
 
 # ==========================================
 # SPRINT 2: TRANSFORMAÇÃO E PADRONIZAÇÃO
@@ -121,3 +133,52 @@ plt.ylabel('Total de Clientes (Frequência)')
 
 # Exibindo o gráfico na tela de forma limpa
 plt.show()
+
+# ==========================================
+# SPRINT 5: ANÁLISE POR AGRUPAMENTOS
+# ==========================================
+
+# Agrupamento 1: quantidade de compras distintas por gênero
+compras_por_genero = (df.groupby('CL_GENERO')['CO_ID'].nunique().sort_values(ascending=False))
+
+print("\n--- COMPRAS DISTINTAS POR GÊNERO ---")
+print(compras_por_genero)
+
+
+# Visualização das compras distintas por gênero
+compras_por_genero.plot(kind='bar',edgecolor='black')
+
+plt.title('Quantidade de Compras Distintas por Gênero')
+plt.xlabel('Gênero')
+plt.ylabel('Quantidade de Compras Distintas')
+plt.xticks(rotation=0)
+plt.show()
+
+
+# Agrupamento 2: quantidade de registros de produtos por categoria
+produtos_por_categoria = (df.groupby('PR_CAT')['PR_ID'].count().sort_values(ascending=False))
+
+print("\n--- QUANTIDADE DE PRODUTOS POR CATEGORIA ---")
+print(produtos_por_categoria)
+
+
+# Visualização da quantidade de registros por categoria
+produtos_por_categoria.plot(kind='bar',edgecolor='black')
+
+plt.title('Quantidade de Registros de Produtos por Categoria')
+plt.xlabel('Categoria')
+plt.ylabel('Quantidade de Registros')
+plt.xticks(rotation=45, ha='right')
+plt.show()
+
+# ==========================================
+# SPRINT 6: EXPORTAÇÃO DA BASE LIMPA
+# ==========================================
+
+# Salvando a base após as etapas de limpeza e transformação
+df.to_csv("df_limpo.csv", sep=";", index=False)
+
+print("\n--- BASE LIMPA EXPORTADA ---")
+print("Arquivo 'df_limpo.csv' criado com sucesso.")
+print(f"Quantidade de registros: {df.shape[0]}")
+print(f"Quantidade de colunas: {df.shape[1]}")
